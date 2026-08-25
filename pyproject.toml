@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "comfyui-4a-novelai"
 version = "1.0.0"
-description = "Lightweight NovelAI image generation nodes for ComfyUI"
+description = "Standalone NovelAI image-generation plugin for ComfyUI (V4.5 and later): native NAI prompt scheduler with multi-character prompting, txt2img / img2img / inpainting, Vibe and Precise Reference, metadata reuse, Anlas usage monitoring, and lossless original PNG saving. Optional Wildcard integration with 4A Prompt Manager."
 readme = "README.md"
 requires-python = ">=3.10"
 license = { file = "LICENSE" }
