@@ -164,15 +164,6 @@ python install.py
 - 未安装 4APM 时调度器不展开 `__wildcard__`。安装后也只展开普通 `__wildcard__`；NovelAI 的花括号与方括号始终作为原生提示词语法保留。
 - 前端界面和节点定义均提供中文与英文本地化。
 
-## 测试
-
-测试使用 mock 网络客户端，不会访问真实 NovelAI 生图接口：
-
-```bash
-python -m pytest -q
-node --test tests/*.mjs
-```
-
 ## 依赖
 
 - **必需：** [`msgpack`](https://pypi.org/project/msgpack/)，用于 NovelAI 官方 Vibe 文件

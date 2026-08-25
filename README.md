@@ -164,15 +164,6 @@ Custom dimensions are limited to 64–2048 and use 64-pixel steps. Image Input a
 - Without 4APM the Scheduler does not expand `__wildcard__`. With 4APM it uses only the plain `__wildcard__` form; NovelAI brace and bracket syntax always remains native prompt text.
 - The interface and node definitions are localized in Chinese and English.
 
-## Tests
-
-Tests use mocked network clients and do not call the real NovelAI generation API:
-
-```bash
-python -m pytest -q
-node --test tests/*.mjs
-```
-
 ## Dependencies
 
 - **Required:** [`msgpack`](https://pypi.org/project/msgpack/) for official NovelAI Vibe files
