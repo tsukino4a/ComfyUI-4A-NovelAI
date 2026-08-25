@@ -2,6 +2,8 @@
 
 [中文说明](README.zh-CN.md)
 
+Companion prompt library: [ComfyUI-4A-Prompt-Manager](https://github.com/tsukino4a/ComfyUI-4A-Prompt-Manager)
+
 A standalone NovelAI image-generation plugin for ComfyUI, supporting NovelAI Diffusion V4.5 and later only. It provides native NAI prompt scheduling, multi-character prompting, text-to-image / image-to-image / inpainting, Vibe and Precise Reference resources, metadata reuse, account usage monitoring, and lossless saving of NovelAI's original PNG output.
 
 **Current release: 1.0.0** — the first complete release of the independent 4A NovelAI generation workflow, with Chinese and English interfaces and optional integration with 4A Prompt Manager.
