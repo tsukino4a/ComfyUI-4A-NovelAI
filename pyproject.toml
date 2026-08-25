@@ -12,6 +12,15 @@ license = { file = "LICENSE" }
 authors = [{ name = "Tsukino4A" }]
 dependencies = ["msgpack"]
 
+[project.urls]
+Repository = "https://github.com/tsukino4a/ComfyUI-4A-NovelAI"
+Documentation = "https://github.com/tsukino4a/ComfyUI-4A-NovelAI#readme"
+"Bug Tracker" = "https://github.com/tsukino4a/ComfyUI-4A-NovelAI/issues"
+
+[tool.comfy]
+PublisherId = "tsukino4a"
+DisplayName = "4A NovelAI"
+
 [tool.setuptools.packages.find]
 where = ["."]
 include = ["domain*", "nodes*", "server*", "services*"]
