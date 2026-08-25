@@ -1,0 +1,172 @@
+{
+  "NovelAI4AModel": {
+    "display_name": "NAI 模型加载器",
+    "description": "选择供 NAI 采样器使用的 NovelAI V5 或 V4.5 模型。",
+    "inputs": {
+      "model": {
+        "name": "模型",
+        "tooltip": "选择 NovelAI 生图模型。",
+        "options": {
+          "V5 Full": "V5 完整版",
+          "V5 Curated": "V5 精选版",
+          "V4.5 Full": "V4.5 完整版",
+          "V4.5 Curated": "V4.5 精选版"
+        }
+      }
+    },
+    "outputs": {
+      "0": {"name": "模型", "tooltip": "供 NAI 采样器使用的已选模型。"}
+    }
+  },
+  "NovelAI4AUsage": {
+    "display_name": "NAI 用量监控",
+    "description": "显示 NovelAI 订阅等级、Anlas 余额和 V5 免费额度，并提供 Token 配置与手动刷新。",
+    "inputs": {},
+    "outputs": {}
+  },
+  "NovelAI4AReference": {
+    "display_name": "NAI 参考资源",
+    "description": "将图片或 Vibe 文件拖入节点，以多卡片管理互斥的 Vibe 或精准参考；角色参考已归入精准参考类型。",
+    "inputs": {
+      "reference_type": {
+        "name": "参考类型",
+        "options": {
+          "Vibe": "Vibe",
+          "Precise Reference": "精准参考"
+        }
+      },
+      "strength": {"name": "强度"},
+      "information_extracted": {"name": "信息提取量"},
+      "fidelity": {"name": "保真度"},
+      "reference_content": {
+        "name": "参考内容",
+        "options": {
+          "Character & Style": "角色与风格",
+          "Character": "角色",
+          "Style": "风格"
+        }
+      },
+      "style_aware": {"name": "包含风格"},
+      "vibe_file": {"name": "Vibe 文件"},
+      "image": {"name": "图像"},
+      "references": {"name": "已有参考资源"}
+    },
+    "outputs": {
+      "0": {"name": "参考资源", "tooltip": "连接到 NAI 采样器的多参考资源列表。"}
+    }
+  },
+  "NovelAI4ASampler": {
+    "display_name": "NAI 采样器",
+    "description": "接收独立的正面、负面、角色 JSON 与宽高输入，并根据专用图像输入自动切换文生图、图生图或局部重绘；连接图像时由图像输入节点决定分辨率。",
+    "inputs": {
+      "model": {"name": "模型"},
+      "positive": {"name": "正面提示词"},
+      "negative": {"name": "负面提示词"},
+      "characters": {"name": "角色"},
+      "width": {"name": "宽度"},
+      "height": {"name": "高度"},
+      "streaming": {"name": "流式生成", "tooltip": "启用 NovelAI SSE 流式接口。"},
+      "seed": {"name": "种子"},
+      "steps": {"name": "步数"},
+      "cfg": {"name": "CFG"},
+      "sampler": {"name": "采样器"},
+      "scheduler": {"name": "调度器"},
+      "cfg_rescale": {"name": "CFG 重缩放"},
+      "references": {"name": "参考资源"},
+      "image_source": {"name": "图像输入"}
+    },
+    "outputs": {
+      "0": {"name": "图像", "tooltip": "NovelAI 返回的标准 ComfyUI 图像批次。"},
+      "1": {"name": "原始结果", "tooltip": "包含 NovelAI 原始 PNG 字节，供 NAI 原图保存节点使用。"}
+    }
+  },
+  "NovelAI4AOriginalSaver": {
+    "display_name": "NAI 原图保存",
+    "description": "将 NovelAI 返回的原始 PNG 直接保存到 ComfyUI output，不重新编码并完整保留原始元数据。",
+    "inputs": {
+      "result": {"name": "原始结果"},
+      "filename": {"name": "文件名", "tooltip": "支持 %time 和 %date；扩展名固定为 PNG。"},
+      "path": {"name": "路径", "tooltip": "ComfyUI output 目录下的相对路径，支持 %time 和 %date。"},
+      "time_format": {"name": "时间格式", "tooltip": "用于 %time 的 Python strftime 格式。"}
+    },
+    "outputs": {}
+  },
+  "NovelAI4AImageInput": {
+    "display_name": "NAI 图像输入",
+    "description": "封装图生图或局部重绘资源，并按照原图比例独立决定生成分辨率；连接遮罩时自动使用局部重绘。",
+    "inputs": {
+      "image": {"name": "图像"},
+      "strength": {"name": "重绘强度"},
+      "noise": {"name": "噪声"},
+      "scale_to_budget": {
+        "name": "缩放到预算像素量",
+        "tooltip": "开启时按照所选档位等比缩放；关闭时采用接近原图像素量的合法 NAI 尺寸。与放大互斥。"
+      },
+      "size_class": {
+        "name": "预算像素量",
+        "tooltip": "仅在开启缩放到预算像素量时生效。",
+        "options": {
+          "Small": "小图",
+          "Normal": "普通",
+          "Large": "大图",
+          "Wallpaper": "壁纸"
+        }
+      },
+      "upscale": {
+        "name": "放大",
+        "tooltip": "按官方 Enhance 规则放大：每边先乘倍率，再向上取整到 64。与缩放到预算像素量互斥。"
+      },
+      "upscale_scale": {
+        "name": "放大倍率",
+        "tooltip": "目前仅提供 1.5 倍，对齐官方 Enhance 1.5。长边超过 2048 时会等比收回。"
+      },
+      "mask": {"name": "遮罩"}
+    },
+    "outputs": {
+      "0": {"name": "图像输入", "tooltip": "连接到 NAI 采样器的专用图像资源。"}
+    }
+  },
+  "NAI Meta Apply": {
+    "display_name": "NAI 元数据一键应用",
+    "description": "选择或拖入 NovelAI 原图，按开关将当前元数据应用到 NAI 节点。",
+    "inputs": {
+      "Prompt": {"name": "正面提示词"},
+      "UC": {"name": "负面提示词"},
+      "Characters": {"name": "角色"},
+      "└ Append": {"name": "└ 追加角色"},
+      "Settings": {"name": "模型和生成参数"},
+      "Seed": {"name": "种子"},
+      "image": {"name": "图片"}
+    },
+    "outputs": {}
+  },
+  "NAI Meta Loader": {
+    "display_name": "NAI 元数据加载器",
+    "description": "查看图片元数据并将模型、生成参数、提示词和角色发送到 NAI 节点。",
+    "inputs": {
+      "imported_json": {"name": "导入元数据 JSON"}
+    },
+    "outputs": {}
+  },
+  "NAI Prompt Scheduler (4A Prompt Manager)": {
+    "display_name": "NAI 提示词调度器",
+    "description": "展开 NAI 专用通配符，并分别输出正面、负面、角色 JSON 与分辨率。",
+    "inputs": {
+      "config_json": {"name": "调度配置 JSON"},
+      "execution_index": {"name": "执行索引"},
+      "run_id": {"name": "运行 ID"},
+      "size_class": {"name": "尺寸档位"},
+      "aspect_ratio": {"name": "画面方向"},
+      "width": {"name": "宽度"},
+      "height": {"name": "高度"},
+      "seed": {"name": "通配符种子"}
+    },
+    "outputs": {
+      "0": {"name": "正面提示词", "tooltip": "可连接普通 ComfyUI 文本或正则处理节点。"},
+      "1": {"name": "负面提示词", "tooltip": "可连接普通 ComfyUI 文本或正则处理节点。"},
+      "2": {"name": "角色", "tooltip": "JSON 字符串，包含外层 use_coords、角色正负面提示词与平铺或手动坐标。"},
+      "3": {"name": "宽度"},
+      "4": {"name": "高度"}
+    }
+  }
+}

@@ -1,0 +1,1003 @@
+{
+  "id": "76358965-60e9-4fdd-a82c-c2b19545edfc",
+  "revision": 0,
+  "last_node_id": 39,
+  "last_link_id": 16,
+  "nodes": [
+    {
+      "id": 8,
+      "type": "NovelAI4AOriginalSaver",
+      "pos": [
+        1925.2554865991292,
+        500.55664052607324
+      ],
+      "size": [
+        669.8147117297126,
+        1097.2883893160226
+      ],
+      "flags": {},
+      "order": 10,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "Raw Result",
+          "name": "result",
+          "type": "NAI_RESULT",
+          "link": 11
+        },
+        {
+          "localized_name": "Filename",
+          "name": "filename",
+          "type": "STRING",
+          "widget": {
+            "name": "filename"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "Path",
+          "name": "path",
+          "type": "STRING",
+          "widget": {
+            "name": "path"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "Time Format",
+          "name": "time_format",
+          "type": "STRING",
+          "widget": {
+            "name": "time_format"
+          },
+          "link": null
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "Node name for S&R": "NovelAI4AOriginalSaver"
+      },
+      "widgets_values": [
+        "NAI_%time",
+        "NovelAI",
+        "%Y-%m-%d_%H-%M-%S"
+      ],
+      "widgets_values_named": {
+        "filename": "NAI_%time",
+        "path": "NovelAI",
+        "time_format": "%Y-%m-%d_%H-%M-%S"
+      }
+    },
+    {
+      "id": 11,
+      "type": "NovelAI4AReference",
+      "pos": [
+        1559.5172305398057,
+        1176.4639183059835
+      ],
+      "size": [
+        324.1368892470696,
+        416.16647978067965
+      ],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "config_json",
+          "name": "config_json",
+          "type": "NAI4A_INTERNAL",
+          "widget": {
+            "name": "config_json"
+          },
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "References",
+          "name": "references",
+          "type": "NAI_REFERENCES",
+          "links": [
+            13
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "NovelAI4AReference"
+      },
+      "widgets_values": [
+        "{\"mode\":\"vibe\",\"encode_model\":\"V4.5 Full\",\"vibe_items\":[],\"precise_items\":[]}",
+        ""
+      ],
+      "widgets_values_named": {
+        "config_json": "{\"mode\":\"vibe\",\"encode_model\":\"V4.5 Full\",\"vibe_items\":[],\"precise_items\":[]}",
+        "nai4a-reference-ui": ""
+      }
+    },
+    {
+      "id": 10,
+      "type": "NovelAI4AModel",
+      "pos": [
+        1259.8912223138054,
+        365.4484856247245
+      ],
+      "size": [
+        270,
+        58
+      ],
+      "flags": {},
+      "order": 1,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "Model",
+          "name": "model",
+          "type": "COMBO",
+          "widget": {
+            "name": "model"
+          },
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "Model",
+          "name": "model",
+          "type": "NAI_MODEL",
+          "links": [
+            12
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "NovelAI4AModel"
+      },
+      "widgets_values": [
+        "V5 Full"
+      ],
+      "widgets_values_named": {
+        "model": "V5 Full"
+      }
+    },
+    {
+      "id": 3,
+      "type": "NAI Prompt Scheduler (4A Prompt Manager)",
+      "pos": [
+        1003.6940262092572,
+        488.16372317230736
+      ],
+      "size": [
+        529.5526261447642,
+        1098.1247363097445
+      ],
+      "flags": {},
+      "order": 2,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "Scheduler Config JSON",
+          "name": "config_json",
+          "type": "NAI4A_INTERNAL",
+          "widget": {
+            "name": "config_json"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "Execution Index",
+          "name": "execution_index",
+          "type": "NAI4A_INTERNAL",
+          "widget": {
+            "name": "execution_index"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "Run ID",
+          "name": "run_id",
+          "type": "NAI4A_INTERNAL",
+          "widget": {
+            "name": "run_id"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "Resolution Tier",
+          "name": "size_class",
+          "type": "COMBO",
+          "widget": {
+            "name": "size_class"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "Orientation",
+          "name": "aspect_ratio",
+          "type": "COMBO",
+          "widget": {
+            "name": "aspect_ratio"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "Width",
+          "name": "width",
+          "type": "INT",
+          "widget": {
+            "name": "width"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "Height",
+          "name": "height",
+          "type": "INT",
+          "widget": {
+            "name": "height"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "Wildcard Seed",
+          "name": "seed",
+          "type": "INT",
+          "widget": {
+            "name": "seed"
+          },
+          "link": null
+        },
+        {
+          "label": " ",
+          "name": "pm4a_track_7175616c697479",
+          "type": "STRING",
+          "pos": [
+            13.344291110153133,
+            235.2088950861887
+          ],
+          "link": null
+        },
+        {
+          "label": " ",
+          "name": "pm4a_track_636861726163746572",
+          "type": "STRING",
+          "pos": [
+            13.344291110153133,
+            340.2088640885441
+          ],
+          "link": null
+        },
+        {
+          "label": " ",
+          "name": "pm4a_track_616374696f6e",
+          "type": "STRING",
+          "pos": [
+            13.344291110153133,
+            445.2088947946093
+          ],
+          "link": null
+        },
+        {
+          "label": " ",
+          "name": "pm4a_track_7363656e65",
+          "type": "STRING",
+          "pos": [
+            13.344291110153133,
+            550.2088637969647
+          ],
+          "link": null
+        },
+        {
+          "label": " ",
+          "name": "pm4a_track_6e65676174697665",
+          "type": "STRING",
+          "pos": [
+            0,
+            211.86458259562806
+          ],
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "Positive Prompt",
+          "name": "positive",
+          "type": "STRING",
+          "links": [
+            4
+          ]
+        },
+        {
+          "localized_name": "Negative Prompt",
+          "name": "negative",
+          "type": "STRING",
+          "links": [
+            5
+          ]
+        },
+        {
+          "localized_name": "Characters",
+          "name": "characters",
+          "type": "STRING",
+          "links": [
+            6
+          ]
+        },
+        {
+          "localized_name": "Width",
+          "name": "width",
+          "type": "INT",
+          "links": [
+            9
+          ]
+        },
+        {
+          "localized_name": "Height",
+          "name": "height",
+          "type": "INT",
+          "links": [
+            10
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "NAI Prompt Scheduler (4A Prompt Manager)",
+        "nai4a_resolution_tier": "Normal"
+      },
+      "widgets_values": [
+        "{\"start_index\":0,\"task_count\":1,\"negative\":\"lowres, worst quality, bad quality\",\"quality_prompt_tab\":\"positive\",\"use_coords\":false,\"positions_initialized\":false,\"tracks\":[{\"id\":\"quality\",\"name\":\"质量\",\"enabled\":true,\"text\":\"1girl, looking at viewer, masterpiece, best quality\",\"mode\":\"random\",\"collapsed\":false,\"ui_height\":54},{\"id\":\"character\",\"name\":\"角色\",\"enabled\":true,\"text\":\"\",\"mode\":\"sequence\",\"collapsed\":false,\"ui_height\":54},{\"id\":\"action\",\"name\":\"动作\",\"enabled\":true,\"text\":\"\",\"mode\":\"sequence\",\"collapsed\":false,\"ui_height\":54},{\"id\":\"scene\",\"name\":\"场景\",\"enabled\":true,\"text\":\"\",\"mode\":\"sequence\",\"collapsed\":false,\"ui_height\":54}],\"characters\":[],\"settings_apply_nai\":true}",
+        0,
+        "",
+        "Custom",
+        "Portrait",
+        832,
+        1216,
+        "",
+        "",
+        0,
+        "randomize"
+      ],
+      "widgets_values_named": {
+        "config_json": "{\"start_index\":0,\"task_count\":1,\"negative\":\"lowres, worst quality, bad quality\",\"quality_prompt_tab\":\"positive\",\"use_coords\":false,\"positions_initialized\":false,\"tracks\":[{\"id\":\"quality\",\"name\":\"质量\",\"enabled\":true,\"text\":\"1girl, looking at viewer, masterpiece, best quality\",\"mode\":\"random\",\"collapsed\":false,\"ui_height\":54},{\"id\":\"character\",\"name\":\"角色\",\"enabled\":true,\"text\":\"\",\"mode\":\"sequence\",\"collapsed\":false,\"ui_height\":54},{\"id\":\"action\",\"name\":\"动作\",\"enabled\":true,\"text\":\"\",\"mode\":\"sequence\",\"collapsed\":false,\"ui_height\":54},{\"id\":\"scene\",\"name\":\"场景\",\"enabled\":true,\"text\":\"\",\"mode\":\"sequence\",\"collapsed\":false,\"ui_height\":54}],\"characters\":[],\"settings_apply_nai\":true}",
+        "execution_index": 0,
+        "run_id": "",
+        "size_class": "Custom",
+        "aspect_ratio": "Portrait",
+        "width": 832,
+        "height": 1216,
+        "nai4a-scheduler-ui": "",
+        "nai4a-resolution-ui": "",
+        "seed": 0,
+        "control_after_generate": "randomize"
+      }
+    },
+    {
+      "id": 25,
+      "type": "NAI Meta Apply",
+      "pos": [
+        -43.59192495305694,
+        484.97525528048106
+      ],
+      "size": [
+        360.08620590127555,
+        716.7194266425768
+      ],
+      "flags": {},
+      "order": 3,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "Positive Prompt",
+          "name": "Prompt",
+          "type": "BOOLEAN",
+          "widget": {
+            "name": "Prompt"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "Negative Prompt",
+          "name": "UC",
+          "type": "BOOLEAN",
+          "widget": {
+            "name": "UC"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "Characters",
+          "name": "Characters",
+          "type": "BOOLEAN",
+          "widget": {
+            "name": "Characters"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "└ Append Characters",
+          "name": "└ Append",
+          "type": "BOOLEAN",
+          "widget": {
+            "name": "└ Append"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "Model & Generation Settings",
+          "name": "Settings",
+          "type": "BOOLEAN",
+          "widget": {
+            "name": "Settings"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "Seed",
+          "name": "Seed",
+          "type": "BOOLEAN",
+          "widget": {
+            "name": "Seed"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "Image",
+          "name": "image",
+          "type": "STRING",
+          "widget": {
+            "name": "image"
+          },
+          "link": null
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "Node name for S&R": "NAI Meta Apply"
+      },
+      "widgets_values": [
+        true,
+        true,
+        false,
+        false,
+        true,
+        true,
+        "",
+        ""
+      ],
+      "widgets_values_named": {
+        "Prompt": true,
+        "UC": true,
+        "Characters": false,
+        "└ Append": false,
+        "Settings": true,
+        "Seed": true,
+        "image": "",
+        "nai4a_meta_apply_ui": ""
+      }
+    },
+    {
+      "id": 7,
+      "type": "NAI Meta Loader",
+      "pos": [
+        351.6884305361509,
+        481.3094482884029
+      ],
+      "size": [
+        623.2515623169356,
+        758.160955927929
+      ],
+      "flags": {},
+      "order": 4,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "Imported Metadata JSON",
+          "name": "imported_json",
+          "type": "STRING",
+          "widget": {
+            "name": "imported_json"
+          },
+          "link": null
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "Node name for S&R": "NAI Meta Loader",
+        "nai4a_meta_preview_ratio": 0.364062513872078
+      },
+      "widgets_values": [
+        "",
+        ""
+      ],
+      "widgets_values_named": {
+        "imported_json": "",
+        "nai4a_meta_loader_ui": ""
+      }
+    },
+    {
+      "id": 6,
+      "type": "NovelAI4ASampler",
+      "pos": [
+        1559.404851641804,
+        495.4605899998069
+      ],
+      "size": [
+        323.00831421262706,
+        624.9234065893919
+      ],
+      "flags": {},
+      "order": 8,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "Model",
+          "name": "model",
+          "type": "NAI_MODEL",
+          "link": 12
+        },
+        {
+          "localized_name": "Positive Prompt",
+          "name": "positive",
+          "type": "STRING",
+          "link": 4
+        },
+        {
+          "localized_name": "Negative Prompt",
+          "name": "negative",
+          "type": "STRING",
+          "link": 5
+        },
+        {
+          "localized_name": "Characters",
+          "name": "characters",
+          "type": "STRING",
+          "link": 6
+        },
+        {
+          "localized_name": "References",
+          "name": "references",
+          "shape": 7,
+          "type": "NAI_REFERENCES",
+          "link": 13
+        },
+        {
+          "localized_name": "Image Input",
+          "name": "image_source",
+          "shape": 7,
+          "type": "NAI_IMAGE_SOURCE",
+          "link": 16
+        },
+        {
+          "localized_name": "Streaming",
+          "name": "streaming",
+          "type": "BOOLEAN",
+          "widget": {
+            "name": "streaming"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "Steps",
+          "name": "steps",
+          "type": "INT",
+          "widget": {
+            "name": "steps"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "CFG",
+          "name": "cfg",
+          "type": "FLOAT",
+          "widget": {
+            "name": "cfg"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "Sampler",
+          "name": "sampler",
+          "type": "COMBO",
+          "widget": {
+            "name": "sampler"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "Scheduler",
+          "name": "scheduler",
+          "type": "COMBO",
+          "widget": {
+            "name": "scheduler"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "CFG Rescale",
+          "name": "cfg_rescale",
+          "type": "FLOAT",
+          "widget": {
+            "name": "cfg_rescale"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "Width",
+          "name": "width",
+          "type": "INT",
+          "widget": {
+            "name": "width"
+          },
+          "link": 9
+        },
+        {
+          "localized_name": "Height",
+          "name": "height",
+          "type": "INT",
+          "widget": {
+            "name": "height"
+          },
+          "link": 10
+        },
+        {
+          "localized_name": "Seed",
+          "name": "seed",
+          "type": "INT",
+          "widget": {
+            "name": "seed"
+          },
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "Image",
+          "name": "image",
+          "type": "IMAGE",
+          "links": []
+        },
+        {
+          "localized_name": "Raw Result",
+          "name": "result",
+          "type": "NAI_RESULT",
+          "links": [
+            11
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "NovelAI4ASampler"
+      },
+      "widgets_values": [
+        true,
+        22,
+        7,
+        "k_dpmpp_2s_ancestral",
+        "karras",
+        0,
+        832,
+        1216,
+        2251889033,
+        "randomize"
+      ],
+      "widgets_values_named": {
+        "streaming": true,
+        "steps": 22,
+        "cfg": 7,
+        "sampler": "k_dpmpp_2s_ancestral",
+        "scheduler": "karras",
+        "cfg_rescale": 0,
+        "width": 832,
+        "height": 1216,
+        "seed": 2251889033,
+        "control_after_generate": "randomize"
+      }
+    },
+    {
+      "id": 9,
+      "type": "NovelAI4AUsage",
+      "pos": [
+        1562.8914828722811,
+        307.72888931120036
+      ],
+      "size": [
+        354.34974797965424,
+        106
+      ],
+      "flags": {},
+      "order": 5,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [],
+      "properties": {
+        "Node name for S&R": "NovelAI4AUsage"
+      },
+      "widgets_values": [
+        ""
+      ],
+      "widgets_values_named": {
+        "nai4a-account": ""
+      }
+    },
+    {
+      "id": 38,
+      "type": "NovelAI4AImageInput",
+      "pos": [
+        733.6339741073394,
+        1309.132358564378
+      ],
+      "size": [
+        223.771484375,
+        174
+      ],
+      "flags": {},
+      "order": 7,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "Image",
+          "name": "image",
+          "type": "IMAGE",
+          "link": 14
+        },
+        {
+          "localized_name": "Mask",
+          "name": "mask",
+          "shape": 7,
+          "type": "MASK",
+          "link": 15
+        },
+        {
+          "localized_name": "Strength",
+          "name": "strength",
+          "type": "FLOAT",
+          "widget": {
+            "name": "strength"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "Noise",
+          "name": "noise",
+          "type": "FLOAT",
+          "widget": {
+            "name": "noise"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "Scale to Pixel Budget",
+          "name": "scale_to_budget",
+          "type": "BOOLEAN",
+          "widget": {
+            "name": "scale_to_budget"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "Pixel Budget",
+          "name": "size_class",
+          "type": "COMBO",
+          "widget": {
+            "name": "size_class"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "Upscale",
+          "name": "upscale",
+          "type": "BOOLEAN",
+          "widget": {
+            "name": "upscale"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "Upscale Amount",
+          "name": "upscale_scale",
+          "type": "COMBO",
+          "widget": {
+            "name": "upscale_scale"
+          },
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "Image Input",
+          "name": "image_source",
+          "type": "NAI_IMAGE_SOURCE",
+          "links": [
+            16
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "NovelAI4AImageInput"
+      },
+      "widgets_values": [
+        0.7,
+        0,
+        true,
+        "Normal",
+        false,
+        "1.5"
+      ],
+      "widgets_values_named": {
+        "strength": 0.7,
+        "noise": 0,
+        "scale_to_budget": true,
+        "size_class": "Normal",
+        "upscale": false,
+        "upscale_scale": "1.5"
+      }
+    },
+    {
+      "id": 39,
+      "type": "LoadImage",
+      "pos": [
+        450.0,
+        1309.132358564378
+      ],
+      "size": [
+        270.0,
+        314.0
+      ],
+      "flags": {},
+      "order": 6,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "image",
+          "name": "image",
+          "type": "COMBO",
+          "widget": {
+            "name": "image"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "choose file to upload",
+          "name": "upload",
+          "type": "IMAGEUPLOAD",
+          "widget": {
+            "name": "upload"
+          },
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "IMAGE",
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            14
+          ]
+        },
+        {
+          "localized_name": "MASK",
+          "name": "MASK",
+          "type": "MASK",
+          "links": [
+            15
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LoadImage"
+      },
+      "widgets_values": [
+        "",
+        "image"
+      ],
+      "widgets_values_named": {
+        "image": "",
+        "upload": "image"
+      }
+    }
+  ],
+  "links": [
+    [
+      4,
+      3,
+      0,
+      6,
+      1,
+      "STRING"
+    ],
+    [
+      5,
+      3,
+      1,
+      6,
+      2,
+      "STRING"
+    ],
+    [
+      6,
+      3,
+      2,
+      6,
+      3,
+      "STRING"
+    ],
+    [
+      9,
+      3,
+      3,
+      6,
+      12,
+      "INT"
+    ],
+    [
+      10,
+      3,
+      4,
+      6,
+      13,
+      "INT"
+    ],
+    [
+      11,
+      6,
+      1,
+      8,
+      0,
+      "NAI_RESULT"
+    ],
+    [
+      12,
+      10,
+      0,
+      6,
+      0,
+      "NAI_MODEL"
+    ],
+    [
+      13,
+      11,
+      0,
+      6,
+      4,
+      "NAI_REFERENCES"
+    ],
+    [
+      14,
+      39,
+      0,
+      38,
+      0,
+      "IMAGE"
+    ],
+    [
+      15,
+      39,
+      1,
+      38,
+      1,
+      "MASK"
+    ],
+    [
+      16,
+      38,
+      0,
+      6,
+      5,
+      "NAI_IMAGE_SOURCE"
+    ]
+  ],
+  "groups": [],
+  "config": {},
+  "extra": {
+    "ds": {
+      "scale": 0.75,
+      "offset": [
+        409.0,
+        -40.0
+      ]
+    },
+    "frontendVersion": "1.49.6"
+  },
+  "version": 0.4
+}

@@ -1,0 +1,17 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "comfyui-4a-novelai"
+version = "1.0.0"
+description = "Lightweight NovelAI image generation nodes for ComfyUI"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { file = "LICENSE" }
+authors = [{ name = "Tsukino4A" }]
+dependencies = ["msgpack"]
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["domain*", "nodes*", "server*", "services*"]

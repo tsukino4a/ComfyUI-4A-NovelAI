@@ -1,0 +1,172 @@
+{
+  "NovelAI4AModel": {
+    "display_name": "NAI Model Loader",
+    "description": "Select a NovelAI V5 or V4.5 model for the NAI Sampler.",
+    "inputs": {
+      "model": {
+        "name": "Model",
+        "tooltip": "Select the NovelAI image-generation model.",
+        "options": {
+          "V5 Full": "V5 Full",
+          "V5 Curated": "V5 Curated",
+          "V4.5 Full": "V4.5 Full",
+          "V4.5 Curated": "V4.5 Curated"
+        }
+      }
+    },
+    "outputs": {
+      "0": {"name": "Model", "tooltip": "Selected model used by the NAI Sampler."}
+    }
+  },
+  "NovelAI4AUsage": {
+    "display_name": "NAI Usage Monitor",
+    "description": "Shows the NovelAI subscription tier, Anlas balance, and V5 free allowance, with token setup and manual refresh controls.",
+    "inputs": {},
+    "outputs": {}
+  },
+  "NovelAI4AReference": {
+    "display_name": "NAI Reference Resources",
+    "description": "Drop images or Vibe files onto the node to manage mutually exclusive Vibe or Precise Reference cards. Character reference is included in Precise Reference.",
+    "inputs": {
+      "reference_type": {
+        "name": "Reference Type",
+        "options": {
+          "Vibe": "Vibe",
+          "Precise Reference": "Precise Reference"
+        }
+      },
+      "strength": {"name": "Strength"},
+      "information_extracted": {"name": "Information Extracted"},
+      "fidelity": {"name": "Fidelity"},
+      "reference_content": {
+        "name": "Reference Content",
+        "options": {
+          "Character & Style": "Character & Style",
+          "Character": "Character",
+          "Style": "Style"
+        }
+      },
+      "style_aware": {"name": "Style Aware"},
+      "vibe_file": {"name": "Vibe File"},
+      "image": {"name": "Image"},
+      "references": {"name": "Existing References"}
+    },
+    "outputs": {
+      "0": {"name": "References", "tooltip": "Multi-reference resource list for the NAI Sampler."}
+    }
+  },
+  "NovelAI4ASampler": {
+    "display_name": "NAI Sampler",
+    "description": "Accepts separate positive, negative, character JSON, width, and height inputs, and switches automatically between text-to-image, image-to-image, and inpainting. When an image is connected, the image input owns the resolution.",
+    "inputs": {
+      "model": {"name": "Model"},
+      "positive": {"name": "Positive Prompt"},
+      "negative": {"name": "Negative Prompt"},
+      "characters": {"name": "Characters"},
+      "width": {"name": "Width"},
+      "height": {"name": "Height"},
+      "streaming": {"name": "Streaming", "tooltip": "Enable the NovelAI SSE streaming API."},
+      "seed": {"name": "Seed"},
+      "steps": {"name": "Steps"},
+      "cfg": {"name": "CFG"},
+      "sampler": {"name": "Sampler"},
+      "scheduler": {"name": "Scheduler"},
+      "cfg_rescale": {"name": "CFG Rescale"},
+      "references": {"name": "References"},
+      "image_source": {"name": "Image Input"}
+    },
+    "outputs": {
+      "0": {"name": "Image", "tooltip": "Standard ComfyUI image batch returned by NovelAI."},
+      "1": {"name": "Raw Result", "tooltip": "Original NovelAI PNG bytes for the NAI Original Image Saver."}
+    }
+  },
+  "NovelAI4AOriginalSaver": {
+    "display_name": "NAI Original Image Saver",
+    "description": "Saves the original PNG returned by NovelAI directly to ComfyUI output without re-encoding, preserving all original metadata.",
+    "inputs": {
+      "result": {"name": "Raw Result"},
+      "filename": {"name": "Filename", "tooltip": "Supports %time and %date; the extension is always PNG."},
+      "path": {"name": "Path", "tooltip": "Relative path under ComfyUI output. Supports %time and %date."},
+      "time_format": {"name": "Time Format", "tooltip": "Python strftime format used by %time."}
+    },
+    "outputs": {}
+  },
+  "NovelAI4AImageInput": {
+    "display_name": "NAI Image Input",
+    "description": "Packages image-to-image or inpainting resources and independently chooses the generation resolution from the source aspect ratio. A connected mask enables inpainting automatically.",
+    "inputs": {
+      "image": {"name": "Image"},
+      "strength": {"name": "Strength"},
+      "noise": {"name": "Noise"},
+      "scale_to_budget": {
+        "name": "Scale to Pixel Budget",
+        "tooltip": "When enabled, scale proportionally to the selected tier. When disabled, use the closest valid NAI size to the source pixel count. Mutually exclusive with Upscale."
+      },
+      "size_class": {
+        "name": "Pixel Budget",
+        "tooltip": "Used only when Scale to Pixel Budget is enabled.",
+        "options": {
+          "Small": "Small",
+          "Normal": "Normal",
+          "Large": "Large",
+          "Wallpaper": "Wallpaper"
+        }
+      },
+      "upscale": {
+        "name": "Upscale",
+        "tooltip": "Upscale with the official Enhance rule: multiply each side, then round up to the next multiple of 64. Mutually exclusive with Scale to Pixel Budget."
+      },
+      "upscale_scale": {
+        "name": "Upscale Amount",
+        "tooltip": "Currently 1.5 only, matching official Enhance 1.5. Sides above 2048 are scaled back together."
+      },
+      "mask": {"name": "Mask"}
+    },
+    "outputs": {
+      "0": {"name": "Image Input", "tooltip": "Dedicated image resource for the NAI Sampler."}
+    }
+  },
+  "NAI Meta Apply": {
+    "display_name": "NAI Meta Apply",
+    "description": "Select or drop an original NovelAI image and apply its current metadata to NAI nodes according to the toggles.",
+    "inputs": {
+      "Prompt": {"name": "Positive Prompt"},
+      "UC": {"name": "Negative Prompt"},
+      "Characters": {"name": "Characters"},
+      "└ Append": {"name": "└ Append Characters"},
+      "Settings": {"name": "Model & Generation Settings"},
+      "Seed": {"name": "Seed"},
+      "image": {"name": "Image"}
+    },
+    "outputs": {}
+  },
+  "NAI Meta Loader": {
+    "display_name": "NAI Meta Loader",
+    "description": "Inspect image metadata and send models, generation settings, prompts, and characters to NAI nodes.",
+    "inputs": {
+      "imported_json": {"name": "Imported Metadata JSON"}
+    },
+    "outputs": {}
+  },
+  "NAI Prompt Scheduler (4A Prompt Manager)": {
+    "display_name": "NAI Prompt Scheduler",
+    "description": "Expands NAI wildcards and outputs separate positive prompt, negative prompt, character JSON, and resolution values.",
+    "inputs": {
+      "config_json": {"name": "Scheduler Config JSON"},
+      "execution_index": {"name": "Execution Index"},
+      "run_id": {"name": "Run ID"},
+      "size_class": {"name": "Resolution Tier"},
+      "aspect_ratio": {"name": "Orientation"},
+      "width": {"name": "Width"},
+      "height": {"name": "Height"},
+      "seed": {"name": "Wildcard Seed"}
+    },
+    "outputs": {
+      "0": {"name": "Positive Prompt", "tooltip": "Can connect to standard ComfyUI text or regex-processing nodes."},
+      "1": {"name": "Negative Prompt", "tooltip": "Can connect to standard ComfyUI text or regex-processing nodes."},
+      "2": {"name": "Characters", "tooltip": "JSON string containing outer use_coords, character positive and negative prompts, and tiled or manual coordinates."},
+      "3": {"name": "Width"},
+      "4": {"name": "Height"}
+    }
+  }
+}
