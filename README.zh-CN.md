@@ -6,7 +6,7 @@
 
 面向 ComfyUI 的独立 NovelAI 生图插件，仅支持 NovelAI Diffusion V4.5 及之后的模型。提供 NAI 原生提示词调度、多角色提示词、文生图 / 图生图 / 局部重绘、Vibe 与精准参考、元数据复用、账户额度监控，以及不重新编码的 NovelAI 原始 PNG 保存。
 
-**当前版本：1.0.0** — 4A NovelAI 独立生图工作流的首个完整版本，提供中英文界面，并可选联动 4A Prompt Manager。
+**当前版本：1.0.1** — 再次拖入相同的官方 Vibe 文件时会复用已有文件，不再向 ComfyUI input 目录重复复制。
 
 > 本项目是非官方社区扩展，与 NovelAI 官方无隶属关系。生成、Vibe 编码与参考功能可能按 NovelAI 账户及当前 API 规则消耗 Anlas；请使用自己的 Persistent API Token。
 

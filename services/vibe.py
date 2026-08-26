@@ -231,11 +231,7 @@ def parse_official_vibe_bytes(data: bytes, *, source_name: str = "Vibe") -> list
     unique = []
     seen = set()
     for record in records:
-        marker = (
-            record["model_key"],
-            round(float(record["information_extracted"]), 6),
-            record["encoding"],
-        )
+        marker = _encoding_marker(record)
         if marker not in seen:
             seen.add(marker)
             unique.append(record)
@@ -411,11 +407,74 @@ def _thumbnail_data_url(image_png: bytes, maximum: int = 256) -> str:
     )
 
 
+def _encoding_marker(record: dict[str, Any]) -> tuple[Any, float, bytes]:
+    return (
+        record.get("model_key"),
+        round(float(record["information_extracted"]), 6),
+        record["encoding"],
+    )
+
+
+def _encoding_markers(records: list[dict[str, Any]]) -> frozenset[tuple[Any, float, bytes]]:
+    return frozenset(_encoding_marker(record) for record in records)
+
+
+def _replace_vibe_file(target: Path, data: bytes) -> None:
+    temporary = target.with_suffix(target.suffix + ".tmp")
+    temporary.write_bytes(data)
+    temporary.replace(target)
+    _VIBE_CACHE.pop(target, None)
+
+
 def _safe_vibe_stem(value: str, fallback: str) -> str:
     invalid = '<>:"/\\|?*'
     name = "".join("_" if char in invalid else char for char in str(value or "").strip())
     name = name.strip(" .")
     return (name or fallback)[:96]
+
+
+def find_equivalent_vibe(data: bytes, records: list[dict[str, Any]]) -> str | None:
+    payload = bytes(data)
+    digest = hashlib.sha256(payload).hexdigest()
+    markers = _encoding_markers(records)
+    for filename in list_vibe_files()[1:]:
+        path = vibe_directory() / filename
+        try:
+            if path.stat().st_size == len(payload) and hashlib.sha256(
+                path.read_bytes()
+            ).hexdigest() == digest:
+                return filename
+        except OSError:
+            continue
+        try:
+            existing = inspect_vibe_file(filename)
+        except NovelAIError:
+            continue
+        if markers == _encoding_markers(existing["records"]):
+            return filename
+    return None
+
+
+def save_uploaded_vibe(data: bytes, original_name: str = "") -> str:
+    payload = bytes(data)
+    original = Path(str(original_name or "vibe.naiv4vibe")).name
+    suffix = Path(original).suffix.lower()
+    if suffix not in VIBE_EXTENSIONS:
+        raise NovelAIError("只支持 .naiv4vibe 和 .naiv4vibeBundle 文件。")
+    incoming = inspect_official_vibe_bytes(payload, source_name=original)
+    existing = find_equivalent_vibe(payload, incoming["records"])
+    if existing is not None:
+        return existing
+    digest = hashlib.sha256(payload).hexdigest()
+    stem = _safe_vibe_stem(Path(original).stem, "vibe")
+    root = vibe_directory()
+    target = root / f"{stem}{suffix}"
+    if target.exists():
+        target = root / f"{stem}-{digest[:8]}{suffix}"
+        if target.exists():
+            target = root / f"{stem}-{digest}{suffix}"
+    _replace_vibe_file(target, payload)
+    return target.name
 
 
 def save_encoded_vibe(
@@ -510,10 +569,7 @@ def save_encoded_vibe(
     ).encode("utf-8")
     if len(data) > MAX_VIBE_BYTES:
         raise NovelAIError("导出的 Vibe 文件超过 128 MB 安全限制。")
-    temporary = target.with_suffix(target.suffix + ".tmp")
-    temporary.write_bytes(data)
-    temporary.replace(target)
-    _VIBE_CACHE.pop(target, None)
+    _replace_vibe_file(target, data)
     return target.name
 
 

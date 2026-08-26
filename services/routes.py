@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import asyncio
-import hashlib
 import io
 from pathlib import Path
 
@@ -20,10 +19,9 @@ from .vibe import (
     choose_vibe_encoding,
     find_matching_vibe,
     inspect_vibe_file,
-    inspect_official_vibe_bytes,
     list_vibe_summaries,
     save_encoded_vibe,
-    vibe_directory,
+    save_uploaded_vibe,
     vibe_preview_bytes,
 )
 from .vibe_authorization import (
@@ -235,21 +233,10 @@ def register_routes() -> None:
                 data.extend(chunk)
                 if len(data) > MAX_VIBE_BYTES:
                     raise NovelAIError("Vibe 文件超过 128 MB 安全限制。")
-            inspect_official_vibe_bytes(bytes(data), source_name=original)
-            safe_name = "".join(
-                "_" if char in '<>:"/\\|?*' else char
-                for char in Path(original).name
-            ).strip(" .")
-            target = vibe_directory() / (safe_name or f"vibe{suffix}")
-            if target.exists():
-                digest = hashlib.sha256(data).hexdigest()[:8]
-                target = target.with_name(f"{target.stem}-{digest}{target.suffix}")
-            temporary = target.with_suffix(target.suffix + ".tmp")
-            temporary.write_bytes(data)
-            temporary.replace(target)
+            filename = save_uploaded_vibe(bytes(data), original)
             return web.json_response(
                 {
-                    "filename": target.name,
+                    "filename": filename,
                     "items": list_vibe_summaries(),
                 }
             )
