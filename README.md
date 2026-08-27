@@ -4,6 +4,8 @@
 
 Companion prompt library: [ComfyUI-4A-Prompt-Manager](https://github.com/tsukino4a/ComfyUI-4A-Prompt-Manager)
 
+Chinese video guide (Bilibili): https://www.bilibili.com/video/BV1Cz4968EVi
+
 A standalone NovelAI image-generation plugin for ComfyUI, supporting NovelAI Diffusion V4.5 and later only. It provides native NAI prompt scheduling, multi-character prompting, text-to-image / image-to-image / inpainting, Vibe and Precise Reference resources, metadata reuse, account usage monitoring, and lossless saving of NovelAI's original PNG output.
 
 **Current release: 1.0.1** — official Vibe drops now reuse an existing matching file instead of copying another one into ComfyUI's input directory.
