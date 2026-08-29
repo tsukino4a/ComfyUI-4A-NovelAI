@@ -8,7 +8,7 @@ Chinese video guide (Bilibili): https://www.bilibili.com/video/BV1Cz4968EVi
 
 A standalone NovelAI image-generation plugin for ComfyUI, supporting NovelAI Diffusion V4.5 and later only. It provides native NAI prompt scheduling, multi-character prompting, text-to-image / image-to-image / inpainting, Vibe and Precise Reference resources, metadata reuse, account usage monitoring, and lossless saving of NovelAI's original PNG output.
 
-**Current release: 1.0.1** — official Vibe drops now reuse an existing matching file instead of copying another one into ComfyUI's input directory.
+**Current release: 1.0.2** — add the official DPM++ 2M SDE sampler (`k_dpmpp_2m_sde`).
 
 > This is an unofficial community extension and is not affiliated with NovelAI. Generation, Vibe encoding, and reference features may consume Anlas according to your NovelAI account and the active API rules. Use your own Persistent API Token.
 

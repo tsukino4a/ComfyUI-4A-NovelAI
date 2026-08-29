@@ -36,6 +36,7 @@ SAMPLERS = (
     "k_euler_ancestral",
     "k_euler",
     "k_dpmpp_2m",
+    "k_dpmpp_2m_sde",
     "k_dpmpp_2s_ancestral",
     "k_dpmpp_sde",
     "k_dpm_2",
