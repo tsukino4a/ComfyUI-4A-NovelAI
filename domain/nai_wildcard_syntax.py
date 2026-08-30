@@ -300,28 +300,43 @@ def _option_stack_entry(candidate_key: str, option_index: int) -> str:
     return f"{candidate_key}#{option_index}"
 
 
+_LEAF_BRANCHES: dict[tuple[int, str, tuple[str, ...], int], tuple[int, ...]] = {}
+
+
 def _leaf_count_key(
     key: str,
     resolver: WildcardResolver,
     stack: tuple[str, ...],
     max_depth: int,
-) -> int:
+) -> tuple[int, ...]:
+    """Per-candidate sequential leaf sizes for one key; empty if unresolvable."""
     if not key or key in stack or len(stack) >= max_depth:
-        return 0
+        return ()
+    cache_key = (id(resolver), key, stack, max_depth)
+    cached = _LEAF_BRANCHES.get(cache_key)
+    if cached is not None:
+        return cached
     candidates = tuple(resolver.resolve(key))
     if not candidates:
-        return 0
+        _LEAF_BRANCHES[cache_key] = ()
+        return ()
     next_stack = stack + (key,)
-    total = 0
+    branches: list[int] = []
     for option_index, candidate in enumerate(candidates):
+        content = prompt_for_nai(candidate)
+        if "__" not in content:
+            branches.append(1)
+            continue
         nested = _leaf_count_nodes(
-            parse(prompt_for_nai(candidate)),
+            parse(content),
             resolver,
             next_stack + (_option_stack_entry(candidate.key, option_index),),
             max_depth,
         )
-        total += nested if nested > 0 else 1
-    return total
+        branches.append(nested if nested > 0 else 1)
+    result = tuple(branches)
+    _LEAF_BRANCHES[cache_key] = result
+    return result
 
 
 def _leaf_count_nodes(
@@ -334,7 +349,7 @@ def _leaf_count_nodes(
         count
         for node in nodes
         if isinstance(node, _Reference)
-        and (count := _leaf_count_key(node.key, resolver, stack, max_depth)) > 0
+        and (count := sum(_leaf_count_key(node.key, resolver, stack, max_depth))) > 0
     ]
     return _product(axes) if axes else 0
 
@@ -502,45 +517,30 @@ def _resolve_reference_at_leaf(
             f"检测到循环通配符引用 {reference.key!r}，位置 {reference.position}"
         )
     candidates = tuple(resolver.resolve(reference.key))
-    if not candidates:
+    branches = _leaf_count_key(
+        reference.key, resolver, stack, context.max_depth
+    )
+    if not candidates or not branches:
         raise WildcardResolutionError(
             f"无法解析通配符 {reference.key!r}，位置 {reference.position}"
         )
-    next_stack = stack + (reference.key,)
-    remaining = int(leaf_index)
-    for option_index, candidate in enumerate(candidates):
-        nested = _leaf_count_nodes(
-            parse(prompt_for_nai(candidate)),
-            resolver,
-            next_stack + (_option_stack_entry(candidate.key, option_index),),
-            context.max_depth,
-        )
-        branch_size = nested if nested > 0 else 1
+    total = sum(branches)
+    remaining = int(leaf_index) % total
+    for option_index, branch_size in enumerate(branches):
         if remaining < branch_size:
             return _candidate_content(
-                candidate,
+                candidates[option_index],
                 reference,
                 resolver,
                 context,
                 state,
                 accumulator,
                 stack,
-                content_leaf_index=remaining if nested > 0 else None,
+                content_leaf_index=remaining if branch_size > 1 else None,
             )
         remaining -= branch_size
-    total = _leaf_count_key(reference.key, resolver, stack, context.max_depth)
-    if total < 1:
-        raise WildcardResolutionError(
-            f"无法解析通配符 {reference.key!r}，位置 {reference.position}"
-        )
-    return _resolve_reference_at_leaf(
-        reference,
-        leaf_index % total,
-        resolver,
-        context,
-        state,
-        accumulator,
-        stack,
+    raise WildcardResolutionError(
+        f"无法解析通配符 {reference.key!r}，位置 {reference.position}"
     )
 
 
@@ -558,7 +558,7 @@ def _expand_nodes(
     coordinates: tuple[int, ...] | None = None
     if references and leaf_index is not None:
         sizes = [
-            _leaf_count_key(node.key, resolver, stack, context.max_depth)
+            sum(_leaf_count_key(node.key, resolver, stack, context.max_depth))
             for node in references
         ]
         missing = next((node for node, size in zip(references, sizes) if size < 1), None)
